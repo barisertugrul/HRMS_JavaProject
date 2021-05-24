@@ -5,11 +5,20 @@ BEGIN;
 
 CREATE TABLE public.employees
 (
-    employee_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
     user_id smallint NOT NULL,
     first_name character varying(35) NOT NULL,
     last_name character varying(35) NOT NULL,
-    PRIMARY KEY (employee_id)
+    PRIMARY KEY (user_id)
+);
+
+CREATE TABLE public.employers
+(
+    user_id smallint NOT NULL,
+    company_name character varying(100) NOT NULL,
+    phone_number character varying(15) NOT NULL,
+    admin_comfirm boolean NOT NULL,
+    website character varying(50) NOT NULL,
+    PRIMARY KEY (user_id)
 );
 
 CREATE TABLE public.job_positions
@@ -22,13 +31,12 @@ CREATE TABLE public.job_positions
 
 CREATE TABLE public.job_seeker
 (
-    job_seeker_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
     user_id smallint NOT NULL,
     first_name character varying(30) NOT NULL,
     last_name character varying(30) NOT NULL,
     nationality_id character varying(15) NOT NULL,
     birth_date date NOT NULL,
-    PRIMARY KEY (job_seeker_id)
+    PRIMARY KEY (user_id)
 );
 
 CREATE TABLE public.users
@@ -36,10 +44,20 @@ CREATE TABLE public.users
     user_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
     email character varying(50) NOT NULL,
     password character varying(500) NOT NULL,
+    register_date timestamp with time zone NOT NULL,
+    activation_code character varying(500) NOT NULL,
+    email_comfirm boolean NOT NULL,
+    is_active boolean NOT NULL,
     PRIMARY KEY (user_id)
 );
 
 ALTER TABLE public.employees
+    ADD FOREIGN KEY (user_id)
+    REFERENCES public.users (user_id)
+    NOT VALID;
+
+
+ALTER TABLE public.employers
     ADD FOREIGN KEY (user_id)
     REFERENCES public.users (user_id)
     NOT VALID;

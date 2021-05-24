@@ -17,15 +17,15 @@ CREATE DATABASE "Hrms"
 
 CREATE TABLE public.employees
 (
-    employee_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
     user_id smallint NOT NULL,
     first_name character varying(35) COLLATE pg_catalog."default" NOT NULL,
     last_name character varying(35) COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT employees_pkey PRIMARY KEY (employee_id),
-    CONSTRAINT fk_user FOREIGN KEY (user_id)
+    CONSTRAINT employees_pkey PRIMARY KEY (user_id),
+    CONSTRAINT employees_user_id_fkey FOREIGN KEY (user_id)
         REFERENCES public.users (user_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE SET NULL
+        ON DELETE NO ACTION
+        NOT VALID
 )
 
 TABLESPACE pg_default;
@@ -40,16 +40,17 @@ ALTER TABLE public.employees
 
 CREATE TABLE public.employers
 (
-    id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
     user_id smallint NOT NULL,
     company_name character varying(100) COLLATE pg_catalog."default" NOT NULL,
     phone_number character varying(15) COLLATE pg_catalog."default" NOT NULL,
     admin_comfirm boolean NOT NULL DEFAULT false,
-    CONSTRAINT employers_pkey PRIMARY KEY (id),
+    website character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT employers_pkey PRIMARY KEY (user_id),
     CONSTRAINT employers_user_id_fkey FOREIGN KEY (user_id)
         REFERENCES public.users (user_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
+        NOT VALID
 )
 
 TABLESPACE pg_default;
@@ -83,18 +84,18 @@ ALTER TABLE public.job_positions
 
 CREATE TABLE public.job_seeker
 (
-    job_seeker_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
     user_id smallint NOT NULL,
     first_name character varying(30) COLLATE pg_catalog."default" NOT NULL,
     last_name character varying(30) COLLATE pg_catalog."default" NOT NULL,
     nationality_id character varying(15) COLLATE pg_catalog."default" NOT NULL,
     birth_date date NOT NULL,
-    CONSTRAINT job_seeker_pkey PRIMARY KEY (job_seeker_id),
+    CONSTRAINT job_seeker_pkey PRIMARY KEY (user_id),
     CONSTRAINT job_seeker_nationality_id_key UNIQUE (nationality_id),
     CONSTRAINT job_seeker_user_id_fkey FOREIGN KEY (user_id)
         REFERENCES public.users (user_id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE SET DEFAULT
+        ON DELETE NO ACTION
+        NOT VALID
 )
 
 TABLESPACE pg_default;
