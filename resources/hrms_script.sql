@@ -41,7 +41,7 @@ CREATE TABLE public.job_seeker
 
 CREATE TABLE public.users
 (
-    user_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
+    id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
     email character varying(50) NOT NULL,
     password character varying(500) NOT NULL,
     register_date timestamp with time zone NOT NULL,
@@ -49,24 +49,24 @@ CREATE TABLE public.users
     email_comfirm boolean NOT NULL,
     is_active boolean NOT NULL,
     is_deleted boolean NOT NULL,
-    PRIMARY KEY (user_id)
+    PRIMARY KEY (id)
 );
 
 ALTER TABLE public.employees
     ADD FOREIGN KEY (user_id)
-    REFERENCES public.users (user_id)
+    REFERENCES public.users (id)
     NOT VALID;
 
 
 ALTER TABLE public.employers
     ADD FOREIGN KEY (user_id)
-    REFERENCES public.users (user_id)
+    REFERENCES public.users (id)
     NOT VALID;
 
 
 ALTER TABLE public.job_seeker
     ADD FOREIGN KEY (user_id)
-    REFERENCES public.users (user_id)
+    REFERENCES public.users (id)
     NOT VALID;
 
 END;

@@ -22,7 +22,7 @@ CREATE TABLE public.employees
     last_name character varying(35) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT employees_pkey PRIMARY KEY (user_id),
     CONSTRAINT employees_user_id_fkey FOREIGN KEY (user_id)
-        REFERENCES public.users (user_id) MATCH SIMPLE
+        REFERENCES public.users (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID
@@ -47,7 +47,7 @@ CREATE TABLE public.employers
     website character varying(50) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT employers_pkey PRIMARY KEY (user_id),
     CONSTRAINT employers_user_id_fkey FOREIGN KEY (user_id)
-        REFERENCES public.users (user_id) MATCH SIMPLE
+        REFERENCES public.users (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID
@@ -92,7 +92,7 @@ CREATE TABLE public.job_seeker
     CONSTRAINT job_seeker_pkey PRIMARY KEY (user_id),
     CONSTRAINT job_seeker_nationality_id_key UNIQUE (nationality_id),
     CONSTRAINT job_seeker_user_id_fkey FOREIGN KEY (user_id)
-        REFERENCES public.users (user_id) MATCH SIMPLE
+        REFERENCES public.users (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID
@@ -110,7 +110,7 @@ ALTER TABLE public.job_seeker
 
 CREATE TABLE public.users
 (
-    user_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
+    id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
     email character varying(50) COLLATE pg_catalog."default" NOT NULL,
     password character varying(500) COLLATE pg_catalog."default" NOT NULL,
     register_date timestamp with time zone NOT NULL,
@@ -118,7 +118,7 @@ CREATE TABLE public.users
     email_comfirm boolean NOT NULL DEFAULT false,
     is_active boolean NOT NULL DEFAULT true,
     is_deleted boolean NOT NULL DEFAULT false,
-    CONSTRAINT users_pkey PRIMARY KEY (user_id)
+    CONSTRAINT users_pkey PRIMARY KEY (id)
 )
 
 TABLESPACE pg_default;
