@@ -1,3 +1,16 @@
+-- Database: Hrms
+
+-- DROP DATABASE "Hrms";
+
+CREATE DATABASE "Hrms"
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Turkish_Turkey.1254'
+    LC_CTYPE = 'Turkish_Turkey.1254'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+	
 -- Table: public.employees
 
 -- DROP TABLE public.employees;
@@ -6,8 +19,8 @@ CREATE TABLE public.employees
 (
     employee_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
     user_id smallint NOT NULL,
-    first_name character varying(30) COLLATE pg_catalog."default" NOT NULL,
-    last_name character varying(30) COLLATE pg_catalog."default" NOT NULL,
+    first_name character varying(35) COLLATE pg_catalog."default" NOT NULL,
+    last_name character varying(35) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT employees_pkey PRIMARY KEY (employee_id),
     CONSTRAINT fk_user FOREIGN KEY (user_id)
         REFERENCES public.users (user_id) MATCH SIMPLE
@@ -31,6 +44,7 @@ CREATE TABLE public.employers
     user_id smallint NOT NULL,
     company_name character varying(100) COLLATE pg_catalog."default" NOT NULL,
     phone_number character varying(15) COLLATE pg_catalog."default" NOT NULL,
+    admin_comfirm boolean NOT NULL DEFAULT false,
     CONSTRAINT employers_pkey PRIMARY KEY (id),
     CONSTRAINT employers_user_id_fkey FOREIGN KEY (user_id)
         REFERENCES public.users (user_id) MATCH SIMPLE
@@ -97,8 +111,11 @@ CREATE TABLE public.users
     user_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
     email character varying(50) COLLATE pg_catalog."default" NOT NULL,
     password character varying(500) COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT users_pkey PRIMARY KEY (user_id),
-    CONSTRAINT users_email_key UNIQUE (email)
+    register_date timestamp with time zone NOT NULL,
+    activation_code character varying(500) COLLATE pg_catalog."default" NOT NULL DEFAULT true,
+    email_comfirm boolean NOT NULL DEFAULT false,
+    is_active boolean NOT NULL DEFAULT true,
+    CONSTRAINT users_pkey PRIMARY KEY (user_id)
 )
 
 TABLESPACE pg_default;
