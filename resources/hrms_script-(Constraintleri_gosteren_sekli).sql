@@ -20,6 +20,30 @@ TABLESPACE pg_default;
 ALTER TABLE public.employees
     OWNER to postgres;
 
+
+-- Table: public.employers
+
+-- DROP TABLE public.employers;
+
+CREATE TABLE public.employers
+(
+    id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
+    user_id smallint NOT NULL,
+    company_name character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    phone_number character varying(15) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT employers_pkey PRIMARY KEY (id),
+    CONSTRAINT employers_user_id_fkey FOREIGN KEY (user_id)
+        REFERENCES public.users (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.employers
+    OWNER to postgres;
+	
+
 -- Table: public.job_positions
 
 -- DROP TABLE public.job_positions;
