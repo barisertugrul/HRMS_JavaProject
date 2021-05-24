@@ -48,6 +48,7 @@ CREATE TABLE public.users
     activation_code character varying(500) NOT NULL,
     email_comfirm boolean NOT NULL,
     is_active boolean NOT NULL,
+    is_deleted boolean NOT NULL,
     PRIMARY KEY (user_id)
 );
 

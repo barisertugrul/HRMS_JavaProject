@@ -103,6 +103,7 @@ TABLESPACE pg_default;
 ALTER TABLE public.job_seeker
     OWNER to postgres;
 
+
 -- Table: public.users
 
 -- DROP TABLE public.users;
@@ -116,6 +117,7 @@ CREATE TABLE public.users
     activation_code character varying(500) COLLATE pg_catalog."default" NOT NULL DEFAULT true,
     email_comfirm boolean NOT NULL DEFAULT false,
     is_active boolean NOT NULL DEFAULT true,
+    is_deleted boolean NOT NULL DEFAULT false,
     CONSTRAINT users_pkey PRIMARY KEY (user_id)
 )
 
