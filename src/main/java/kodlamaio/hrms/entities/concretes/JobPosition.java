@@ -24,7 +24,7 @@ public class JobPosition {
 	private int id;
 	
 	@Column(name="position_name")
-	private String name;
+	private String positionName;
 	
 	@Column(name="position_description")
 	private String description;
