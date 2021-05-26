@@ -2,7 +2,7 @@
 Yazılım Geliştirici Yetiştirme Kampı (JAVA &amp; REACT) Uygulama Projesi (Backend)
 
 * İş arayanlar ve iş verenler için gerekli register işlemleri AuthManager içerisinde ayrı metotlarla gerçekleştiriliyor
-* Gerekli alanların doluluk ve uygunluk kontrollerini, Business katmanına yerleştirdiğim kendi Validation sınıfları ile yapılıyor. Tüm alan hataları toplu olarak kullanıcıya geri iletiliyor.
+* Gerekli alanların doluluk ve uygunluk kontrolleri, Business katmanına yerleştirdiğim kendi Validation sınıfları ile yapılıyor. Tüm alan hataları toplu olarak kullanıcıya geri iletiliyor.
 * Email ve TC kimlik no uygunluk kontrolünü basit regex kalıpları ile yaptım, ama eksik olduğu için istisnalara yol açabiliyor.
 * İşveren domain-email uygunluğunu da aynı doğrulama sınıfında regex ile gerçekleştirdim. Regex kalıbı ile email adresindeki domain bölümünü ayırıp, website stringi ile eşitliğini kontrol ettim.
 * Yine mernis doğrulaması ve email ile aktivasyon kodu gönderimini constructor injection yoluyla eklediğim servisler aracılığı ile yaptım.
