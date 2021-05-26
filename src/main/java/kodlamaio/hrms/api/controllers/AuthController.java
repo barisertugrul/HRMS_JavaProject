@@ -28,29 +28,34 @@ public class AuthController {
         return authService.login(userForLoginDto);
     }
     
-    @PostMapping("/loginJobSeeker")
+    @PostMapping("/loginjobseeker")
     public Result loginJobSeeker(@RequestBody UserForLoginDto userForLoginDto) {
         return authService.loginJobSeeker(userForLoginDto);
     }
     
-    @PostMapping("/loginEmployer")
+    @PostMapping("/loginemployer")
     public Result loginEmployer(@RequestBody UserForLoginDto userForLoginDto) {
         return authService.loginEmployer(userForLoginDto);
     }
     
-    @PostMapping("/loginEmployee")
+    @PostMapping("/loginemployee")
     public Result loginEmployee(@RequestBody UserForLoginDto userForLoginDto) {
         return authService.loginEmployee(userForLoginDto);
     }
 
-    @PostMapping("/employerRegister")
+    @PostMapping("/employerregister")
     public Result registerForEmployer(@RequestBody EmployerForRegisterDto employerForRegisterDto) {
         return authService.employerRegister(employerForRegisterDto);
     }
 
-    @PostMapping("/jobSeekerRegister")
+    @PostMapping("/jobSeekerregister")
     public Result registerForJobSeeker(@RequestBody JobSeekerForRegisterDto jobSeekerForRegisterDto) {
         return authService.jobSeekerRegister(jobSeekerForRegisterDto);
+    }
+
+    @PostMapping("/comfirmactivation")
+    public Result comfirmActivation(@RequestBody String email, String activationCode) {
+        return authService.comfirmActivation(email, activationCode);
     }
 
 }
