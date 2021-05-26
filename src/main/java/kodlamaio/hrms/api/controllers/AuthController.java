@@ -53,9 +53,9 @@ public class AuthController {
         return authService.jobSeekerRegister(jobSeekerForRegisterDto);
     }
 
-    @PostMapping("/comfirmactivation")
-    public Result comfirmActivation(@RequestBody String email, String activationCode) {
-        return authService.comfirmActivation(email, activationCode);
+    @PostMapping("/confirmactivation")
+    public Result confirmActivation(@RequestBody String email, String activationCode) {
+        return authService.confirmActivation(email, activationCode);
     }
 
 }

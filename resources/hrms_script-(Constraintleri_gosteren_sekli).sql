@@ -43,7 +43,7 @@ CREATE TABLE public.employers
     user_id smallint NOT NULL,
     company_name character varying(100) COLLATE pg_catalog."default" NOT NULL,
     phone_number character varying(15) COLLATE pg_catalog."default" NOT NULL,
-    admin_comfirm boolean NOT NULL DEFAULT false,
+    admin_confirm boolean NOT NULL DEFAULT false,
     website character varying(50) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT employers_pkey PRIMARY KEY (user_id),
     CONSTRAINT employers_user_id_fkey FOREIGN KEY (user_id)

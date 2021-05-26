@@ -12,4 +12,6 @@ public final class Messages {
 	public static String saveUserAndSendCode = "User added successfully and activation link has been sent to registration email address";
 	public static String saveUserButNotSendCode = "User added successfully but the activation code could not be sent";
 	public static String notMatchEmailAndDomain = "Mail and domain name do not match";
+	public static String confirmActivationSuccess = "Confirm activation successfully";
+	public static String allreadyConfirm = "Activation has already been completed.";
 }

@@ -48,7 +48,7 @@ public class EmployerManager implements EmployerService {
 	public Result checkLogin(String email, String password) {
 		Employer employer = this.employerDao.findUserByEmailAndPassword(email, password);
 		if(employer != null) {
-			if(employer.isActive() && employer.isAdminComfirm() && !employer.isDeleted()) {
+			if(employer.isActive() && employer.isAdminConfirm() && !employer.isDeleted()) {
 				return new SuccessResult();
 			}
 		}

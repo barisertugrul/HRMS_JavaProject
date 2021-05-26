@@ -181,9 +181,8 @@ public class AuthManager implements AuthService {
 	}
 
 	@Override
-	public boolean comfirmActivation(String email, String activationCode) {
-		
-		return userService.comfirmActivation(email, activationCode);
+	public Result confirmActivation(String email, String activationCode) {
+		return userService.confirmActivation(email, activationCode);
 	}
 
 }

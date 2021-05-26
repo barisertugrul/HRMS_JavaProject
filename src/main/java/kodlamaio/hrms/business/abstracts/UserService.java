@@ -10,7 +10,7 @@ public interface UserService {
 	DataResult<List<User>> getAll();
 	DataResult<User> getByEmail(String email);
 	Result add(User user);
-	boolean comfirmActivation(String email, String activationCode);
+	Result confirmActivation(String email, String activationCode);
 	Result checkLogin(String email, String password);
 	boolean checkIfExistsUserByEmail(String email);
 }

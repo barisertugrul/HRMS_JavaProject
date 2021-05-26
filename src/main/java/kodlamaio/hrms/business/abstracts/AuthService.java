@@ -14,5 +14,5 @@ public interface AuthService {
     Result employerRegister(EmployerForRegisterDto employerForRegisterDto);
     Result jobSeekerRegister(JobSeekerForRegisterDto jobSeekerForRegisterDto);
 
-	boolean comfirmActivation(String email, String activationCode);
+	Result confirmActivation(String email, String activationCode);
 }

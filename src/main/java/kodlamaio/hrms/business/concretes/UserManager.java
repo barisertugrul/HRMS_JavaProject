@@ -14,6 +14,7 @@ import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.dataAccess.abstracts.UserDao;
 import kodlamaio.hrms.entities.concretes.User;
+import kodlamaio.hrms.business.constants.Messages;
 
 @Service
 public class UserManager implements UserService {
@@ -49,17 +50,19 @@ private UserDao userDao;
 	}
 
 	@Override
-	public boolean comfirmActivation(String email, String activationCode) {
+	public Result confirmActivation(String email, String activationCode) {
 		User user = this.userDao.findUserByEmail(email);
 		if(user != null) {
-			if(user.getActivationCode().equals(activationCode) && !user.isDeleted()) {
-				user.setActive(true);
-				userDao.save(user);
-				return true;
+			if(!user.isActive()) {
+				if(user.getActivationCode().equals(activationCode) && !user.isDeleted()) {
+					user.setActive(true);
+					userDao.save(user);
+					return new SuccessResult(Messages.confirmActivationSuccess);
+				}
 			}
-			return user.isActive() && !user.isDeleted();
+			return new SuccessResult(Messages.allreadyConfirm);
 		}
-        return false;
+        return new ErrorResult();
 	}
 
 	@Override

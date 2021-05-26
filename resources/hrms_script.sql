@@ -16,7 +16,7 @@ CREATE TABLE public.employers
     user_id smallint NOT NULL,
     company_name character varying(100) NOT NULL,
     phone_number character varying(15) NOT NULL,
-    admin_comfirm boolean NOT NULL,
+    admin_confirm boolean NOT NULL,
     website character varying(50) NOT NULL,
     PRIMARY KEY (user_id)
 );
@@ -29,13 +29,13 @@ CREATE TABLE public.job_positions
     PRIMARY KEY (position_id)
 );
 
-CREATE TABLE public.job_seeker
+CREATE TABLE public.job_seekers
 (
     user_id smallint NOT NULL,
     first_name character varying(30) NOT NULL,
     last_name character varying(30) NOT NULL,
     nationality_id character varying(15) NOT NULL,
-    birth_date date NOT NULL,
+    year_of_birth smallint NOT NULL,
     PRIMARY KEY (user_id)
 );
 
@@ -64,7 +64,7 @@ ALTER TABLE public.employers
     NOT VALID;
 
 
-ALTER TABLE public.job_seeker
+ALTER TABLE public.job_seekers
     ADD FOREIGN KEY (user_id)
     REFERENCES public.users (id)
     NOT VALID;

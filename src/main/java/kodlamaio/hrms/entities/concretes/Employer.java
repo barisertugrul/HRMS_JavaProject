@@ -28,8 +28,8 @@ public class Employer extends User{
 	@Column(name="phone_number")
 	private String phoneNumber;
 	
-	@Column(name="admin_comfirm", columnDefinition = "boolean default false")
-	private boolean adminComfirm = false;
+	@Column(name="admin_confirm", columnDefinition = "boolean default false")
+	private boolean adminConfirm = false;
 
 
     public Employer(
