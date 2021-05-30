@@ -12,4 +12,6 @@ public interface EmployerService {
 	
 	Result checkLogin(String email, String password);
 	Result validate(Employer employer);
+	Result verifyByAdmin(Employer employer);
+	boolean isActive(int employerId);
 }

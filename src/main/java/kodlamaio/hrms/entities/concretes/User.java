@@ -42,11 +42,11 @@ public class User {
 	@Column(name= "activation_code")
 	private String activationCode;
 	
-	@Column(name= "is_active", columnDefinition = "boolean default true")
-	private boolean isActive = true;
+	@Column(name= "is_active", columnDefinition = "boolean default false")
+	private boolean active = false;
 	
 	@Column(name= "is_deleted", columnDefinition = "boolean default false")
-	private boolean isDeleted = false;
+	private boolean deleted = false;
 
 	public User(String email, String password, String activationCode) {
 		this.email = email;

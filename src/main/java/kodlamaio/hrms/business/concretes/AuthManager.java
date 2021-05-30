@@ -9,15 +9,15 @@ import kodlamaio.hrms.business.abstracts.ActivationService;
 import kodlamaio.hrms.business.abstracts.AuthService;
 import kodlamaio.hrms.business.abstracts.CheckRealPersonService;
 import kodlamaio.hrms.business.abstracts.EmployerService;
-import kodlamaio.hrms.business.abstracts.JobSeekerService;
+import kodlamaio.hrms.business.abstracts.CandidateService;
 import kodlamaio.hrms.business.abstracts.UserService;
 import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.entities.concretes.Employer;
-import kodlamaio.hrms.entities.concretes.JobSeeker;
+import kodlamaio.hrms.entities.concretes.Candidate;
 import kodlamaio.hrms.entities.dtos.EmployerForRegisterDto;
-import kodlamaio.hrms.entities.dtos.JobSeekerForRegisterDto;
+import kodlamaio.hrms.entities.dtos.CandidateForRegisterDto;
 import kodlamaio.hrms.entities.dtos.UserForLoginDto;
 import kodlamaio.hrms.business.constants.Messages;
 
@@ -26,20 +26,20 @@ public class AuthManager implements AuthService {
 
 	private UserService userService;
 	private EmployerService employerService;
-	private JobSeekerService jobSeekerService;
+	private CandidateService candidateService;
 	private CheckRealPersonService checkRealPersonService;
 	private ActivationService activationService;
 	
 	@Autowired
 	public AuthManager(UserService userService,
 			EmployerService employerService,
-			JobSeekerService jobSeekerService,
+			CandidateService candidateService,
 			CheckRealPersonService checkRealPersonService,
 			ActivationService activationService) {
 		super();
 		this.userService = userService;
 		this.employerService = employerService;
-		this.jobSeekerService = jobSeekerService;
+		this.candidateService = candidateService;
 		this.checkRealPersonService = checkRealPersonService;
 		this.activationService = activationService;
 		
@@ -51,8 +51,8 @@ public class AuthManager implements AuthService {
 	}
 	
 	@Override
-	public Result loginJobSeeker(UserForLoginDto userForLoginDto) {
-		return jobSeekerService.checkLogin(userForLoginDto.getEmail(), userForLoginDto.getPassword());
+	public Result loginCandidate(UserForLoginDto userForLoginDto) {
+		return candidateService.checkLogin(userForLoginDto.getEmail(), userForLoginDto.getPassword());
 	}
 
 	@Override
@@ -101,39 +101,39 @@ public class AuthManager implements AuthService {
 	}
 
 	@Override
-	public Result jobSeekerRegister(JobSeekerForRegisterDto jobSeekerForRegisterDto) {
-		int year = (jobSeekerForRegisterDto.getYearOfBirth() == null)? 0 : jobSeekerForRegisterDto.getYearOfBirth();
-		JobSeeker jobSeeker = new JobSeeker(
-						jobSeekerForRegisterDto.getFirstName(),
-						jobSeekerForRegisterDto.getLastName(),
-						jobSeekerForRegisterDto.getNationalityId(),
+	public Result candidateRegister(CandidateForRegisterDto candidateForRegisterDto) {
+		int year = (candidateForRegisterDto.getYearOfBirth() == null)? 0 : candidateForRegisterDto.getYearOfBirth();
+		Candidate candidate = new Candidate(
+						candidateForRegisterDto.getFirstName(),
+						candidateForRegisterDto.getLastName(),
+						candidateForRegisterDto.getNationalityId(),
 						year,
-						jobSeekerForRegisterDto.getEmail(),
-						jobSeekerForRegisterDto.getPassword()
+						candidateForRegisterDto.getEmail(),
+						candidateForRegisterDto.getPassword()
 						);
 		
-		var validateResult = validateJobSeeker(jobSeeker);
+		var validateResult = validateCandidate(candidate);
 		if(!validateResult.isSuccess()) {
 			return new ErrorResult(validateResult.getMessage());
 		}
 		
-		if(!isPasswordMatch(jobSeekerForRegisterDto.getPassword(),jobSeekerForRegisterDto.getRepassword())) {
+		if(!isPasswordMatch(candidateForRegisterDto.getPassword(),candidateForRegisterDto.getRepassword())) {
 			return new ErrorResult(Messages.passwordsNotMatch);
 		}
 		
-		if(userExists(jobSeeker.getEmail()) || nationalityIdExists(jobSeeker.getNationalityId())) {
+		if(userExists(candidate.getEmail()) || nationalityIdExists(candidate.getNationalityId())) {
 			return new ErrorResult(Messages.userExists);
 		}
 		
-		if(!checkIfRealPerson(jobSeekerForRegisterDto)) {
+		if(!checkIfRealPerson(candidateForRegisterDto)) {
 			return new ErrorResult(Messages.NotRealPerson);
 		}
 		
-		jobSeeker.setActivationCode(createActivationCode(jobSeeker.getEmail()));
+		candidate.setActivationCode(createActivationCode(candidate.getEmail()));
 		
-		var resultAdd =  jobSeekerService.add(jobSeeker);
+		var resultAdd =  candidateService.add(candidate);
 		if(resultAdd.isSuccess()) {
-			var resultSend = activationService.sendActivationCode(jobSeeker.getEmail(), jobSeeker.getActivationCode()).isSuccess();
+			var resultSend = activationService.sendActivationCode(candidate.getEmail(), candidate.getActivationCode()).isSuccess();
 			if(resultSend) {
 				return new SuccessResult(Messages.saveUserAndSendCode);
 			}else {
@@ -150,12 +150,12 @@ public class AuthManager implements AuthService {
 
 
 	private boolean nationalityIdExists(String nationalityId) {
-		return jobSeekerService.checkIfExistsUserByNationalityId(nationalityId);
+		return candidateService.checkIfExistsUserByNationalityId(nationalityId);
 	}
 	
-	private Result validateJobSeeker(JobSeeker jobSeeker) {
+	private Result validateCandidate(Candidate candidate) {
 
-		return jobSeekerService.validate(jobSeeker);
+		return candidateService.validate(candidate);
 		
 	}
 	
@@ -169,9 +169,9 @@ public class AuthManager implements AuthService {
 		return password.equals(repassword);
 	}
 	
-	private boolean checkIfRealPerson(JobSeekerForRegisterDto jobSeeker) {
+	private boolean checkIfRealPerson(CandidateForRegisterDto candidate) {
 
-		return checkRealPersonService.validate(jobSeeker);
+		return checkRealPersonService.validate(candidate);
 	}
 
 	private String createActivationCode(String email) {

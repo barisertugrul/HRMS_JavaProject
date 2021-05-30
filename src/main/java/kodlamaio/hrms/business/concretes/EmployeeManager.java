@@ -35,14 +35,14 @@ public class EmployeeManager implements EmployeeService {
 	public Result add(Employee employe) {
 		var result = employeeDao.save(employe);
 		if(result != null) {
-			return new SuccessResult(Messages.userAddSuccess);
+			return new SuccessResult(Messages.userAddedSuccess);
 		}
 		return new ErrorResult();
 	}
 
 	@Override
 	public Result checkLogin(String email, String password) {
-		Employee employee = this.employeeDao.findUserByEmailAndPassword(email, password);
+		Employee employee = this.employeeDao.findEmployeeByEmailAndPassword(email, password);
 			if(employee != null) {
 				if(employee.isActive() && !employee.isDeleted()) {
 					return new SuccessResult();

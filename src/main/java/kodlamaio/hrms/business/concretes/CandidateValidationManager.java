@@ -12,27 +12,27 @@ import kodlamaio.hrms.core.utilities.results.ErrorDataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
-import kodlamaio.hrms.entities.concretes.JobSeeker;
+import kodlamaio.hrms.entities.concretes.Candidate;
 import kodlamaio.hrms.business.constants.Messages;
 
 @Service
-public class JobSeekerValidationManager implements UserValidationService<JobSeeker> {
+public class CandidateValidationManager implements UserValidationService<Candidate> {
 
 	private List<String> errors = new ArrayList<String>();
 	
 	@Override
-	public DataResult<List<String>> validate(JobSeeker jobSeeker) {
+	public DataResult<List<String>> validate(Candidate candidate) {
 		errors.clear();
-		if(checkIsNotNull("Email", jobSeeker.getEmail()).isSuccess()) {
-			checkEmailPattern(jobSeeker.getEmail());
+		if(checkIsNotNull("Email", candidate.getEmail()).isSuccess()) {
+			checkEmailPattern(candidate.getEmail());
 		}
-		checkIsNotNull("First Name", jobSeeker.getFirstName());
-		checkIsNotNull("Last Name", jobSeeker.getLastName());
-		if(checkIsNotNull("Nationality Id", jobSeeker.getNationalityId()).isSuccess()) {
-			isTCKN(jobSeeker.getNationalityId());
+		checkIsNotNull("First Name", candidate.getFirstName());
+		checkIsNotNull("Last Name", candidate.getLastName());
+		if(checkIsNotNull("Nationality Id", candidate.getNationalityId()).isSuccess()) {
+			isTCKN(candidate.getNationalityId());
 		}
-		if(checkIsNotNull("Year of Birth Date", String.valueOf(jobSeeker.getYearOfBirth())).isSuccess()) {
-			isYear(jobSeeker.getYearOfBirth());
+		if(checkIsNotNull("Year of Birth Date", String.valueOf(candidate.getYearOfBirth())).isSuccess()) {
+			isYear(candidate.getYearOfBirth());
 		}
 		if(!this.errors.isEmpty()) {
 			return new ErrorDataResult<List<String>>(errors);

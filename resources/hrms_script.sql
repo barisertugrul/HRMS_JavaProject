@@ -3,6 +3,23 @@
 BEGIN;
 
 
+CREATE TABLE public.candidates
+(
+    user_id smallint NOT NULL,
+    first_name character varying(30) NOT NULL,
+    last_name character varying(30) NOT NULL,
+    nationality_id character varying(15) NOT NULL,
+    year_of_birth smallint NOT NULL,
+    PRIMARY KEY (user_id)
+);
+
+CREATE TABLE public.cities
+(
+    city_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
+    city_name character varying NOT NULL,
+    PRIMARY KEY (city_id)
+);
+
 CREATE TABLE public.employees
 (
     user_id smallint NOT NULL,
@@ -21,22 +38,29 @@ CREATE TABLE public.employers
     PRIMARY KEY (user_id)
 );
 
+CREATE TABLE public.job_advertisements
+(
+    advertisement_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
+    position_id smallint NOT NULL,
+    city_id smallint NOT NULL,
+    job_definition text NOT NULL,
+    min_salary numeric(10, 2),
+    max_salary numeric(10, 2),
+    number_of_open_positions smallint NOT NULL,
+    created_date date NOT NULL,
+    expiration_date date,
+    employer_id smallint NOT NULL,
+    is_active boolean NOT NULL,
+    expiration_dated date,
+    PRIMARY KEY (advertisement_id)
+);
+
 CREATE TABLE public.job_positions
 (
     position_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
     position_name character varying(30) NOT NULL,
     position_description text,
     PRIMARY KEY (position_id)
-);
-
-CREATE TABLE public.job_seekers
-(
-    user_id smallint NOT NULL,
-    first_name character varying(30) NOT NULL,
-    last_name character varying(30) NOT NULL,
-    nationality_id character varying(15) NOT NULL,
-    year_of_birth smallint NOT NULL,
-    PRIMARY KEY (user_id)
 );
 
 CREATE TABLE public.users
@@ -52,6 +76,18 @@ CREATE TABLE public.users
     PRIMARY KEY (id)
 );
 
+ALTER TABLE public.candidates
+    ADD FOREIGN KEY (user_id)
+    REFERENCES public.users (id)
+    NOT VALID;
+
+
+ALTER TABLE public.cities
+    ADD FOREIGN KEY (city_id)
+    REFERENCES public.cities (city_id)
+    NOT VALID;
+
+
 ALTER TABLE public.employees
     ADD FOREIGN KEY (user_id)
     REFERENCES public.users (id)
@@ -64,9 +100,21 @@ ALTER TABLE public.employers
     NOT VALID;
 
 
-ALTER TABLE public.job_seekers
-    ADD FOREIGN KEY (user_id)
-    REFERENCES public.users (id)
+ALTER TABLE public.job_advertisements
+    ADD FOREIGN KEY (city_id)
+    REFERENCES public.cities (city_id)
+    NOT VALID;
+
+
+ALTER TABLE public.job_advertisements
+    ADD FOREIGN KEY (employer_id)
+    REFERENCES public.employers (user_id)
+    NOT VALID;
+
+
+ALTER TABLE public.job_advertisements
+    ADD FOREIGN KEY (position_id)
+    REFERENCES public.job_positions (position_id)
     NOT VALID;
 
 END;

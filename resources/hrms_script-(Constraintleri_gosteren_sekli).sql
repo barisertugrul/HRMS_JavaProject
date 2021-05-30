@@ -125,3 +125,61 @@ TABLESPACE pg_default;
 
 ALTER TABLE public.users
     OWNER to postgres;
+
+-- Table: public.job_advertisements
+
+-- DROP TABLE public.job_advertisements;
+
+CREATE TABLE public.job_advertisements
+(
+    advertisement_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
+    position_id smallint NOT NULL,
+    city_id smallint NOT NULL,
+    job_definition text COLLATE pg_catalog."default" NOT NULL,
+    min_salary numeric(10,2),
+    max_salary numeric(10,2),
+    number_of_open_positions smallint NOT NULL,
+    created_date date NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    expiration_date date,
+    employer_id smallint NOT NULL,
+    is_active boolean NOT NULL DEFAULT true,
+    expiration_dated date,
+    CONSTRAINT job_advertises_pkey PRIMARY KEY (advertisement_id),
+    CONSTRAINT job_advertises_city_id_fkey FOREIGN KEY (city_id)
+        REFERENCES public.cities (city_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT job_advertises_employer_id_fkey FOREIGN KEY (employer_id)
+        REFERENCES public.employers (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT job_advertises_position_id_fkey FOREIGN KEY (position_id)
+        REFERENCES public.job_positions (position_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.job_advertisements
+    OWNER to postgres;
+
+-- Table: public.cities
+
+-- DROP TABLE public.cities;
+
+CREATE TABLE public.cities
+(
+    city_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
+    city_name character varying COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT cities_pkey PRIMARY KEY (city_id),
+    CONSTRAINT fkob77udyax7da1dcmsoymcrs8i FOREIGN KEY (city_id)
+        REFERENCES public.cities (city_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.cities
+    OWNER to postgres;

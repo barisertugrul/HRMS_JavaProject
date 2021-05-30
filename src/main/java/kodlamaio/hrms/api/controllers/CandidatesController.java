@@ -7,24 +7,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import kodlamaio.hrms.business.abstracts.JobSeekerService;
+import kodlamaio.hrms.business.abstracts.CandidateService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
-import kodlamaio.hrms.entities.concretes.JobSeeker;
+import kodlamaio.hrms.entities.concretes.Candidate;
 
 @RestController
-@RequestMapping("/api/jobseekers")
-public class JobSeekersController {
+@RequestMapping("/api/candidates")
+public class CandidatesController {
 
-	private JobSeekerService jobSeekerService;
+	private CandidateService candidateService;
 
 	@Autowired
-	public JobSeekersController(JobSeekerService jobSeekerService) {
+	public CandidatesController(CandidateService candidateService) {
 		super();
-		this.jobSeekerService = jobSeekerService;
+		this.candidateService = candidateService;
 	}
 	
 	@GetMapping("/getall")
-	public DataResult<List<JobSeeker>> getAll(){
-		return this.jobSeekerService.getAll();
+	public DataResult<List<Candidate>> getAll(){
+		return this.candidateService.getAll();
 	}
 }

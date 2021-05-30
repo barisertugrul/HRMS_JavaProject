@@ -4,12 +4,12 @@ import java.util.List;
 
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
-import kodlamaio.hrms.entities.concretes.JobSeeker;
+import kodlamaio.hrms.entities.concretes.Candidate;
 
-public interface JobSeekerService {
-	DataResult<List<JobSeeker>> getAll();
-	Result add(JobSeeker jobSeeker);
-	Result validate(JobSeeker jobSeeker);
+public interface CandidateService {
+	DataResult<List<Candidate>> getAll();
+	Result add(Candidate candidate);
+	Result validate(Candidate candidate);
 	Result checkLogin(String email, String password);
 	boolean checkIfExistsUserByNationalityId(String nationalityId);
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kodlamaio.hrms.business.abstracts.JobSeekerService;
+import kodlamaio.hrms.business.abstracts.CandidateService;
 import kodlamaio.hrms.business.abstracts.UserValidationService;
 import kodlamaio.hrms.business.constants.Messages;
 import kodlamaio.hrms.core.utilities.results.DataResult;
@@ -13,41 +13,41 @@ import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
-import kodlamaio.hrms.dataAccess.abstracts.JobSeekerDao;
-import kodlamaio.hrms.entities.concretes.JobSeeker;
+import kodlamaio.hrms.dataAccess.abstracts.CandidateDao;
+import kodlamaio.hrms.entities.concretes.Candidate;
 
 @Service
-public class JobSeekerManager implements JobSeekerService {
+public class CandidateManager implements CandidateService {
 
-	private JobSeekerDao jobSeekerDao;
-	private UserValidationService<JobSeeker> validationService;
+	private CandidateDao candidateDao;
+	private UserValidationService<Candidate> validationService;
 	
 	@Autowired
-	public JobSeekerManager(JobSeekerDao jobSeekerDao, UserValidationService<JobSeeker> validationService) {
+	public CandidateManager(CandidateDao candidateDao, UserValidationService<Candidate> validationService) {
 		super();
-		this.jobSeekerDao = jobSeekerDao;
+		this.candidateDao = candidateDao;
 		this.validationService = validationService;
 	}
 
 	@Override
-	public DataResult<List<JobSeeker>> getAll() {
-		return new SuccessDataResult<List<JobSeeker>>
-		(this.jobSeekerDao.findAll());	
+	public DataResult<List<Candidate>> getAll() {
+		return new SuccessDataResult<List<Candidate>>
+		(this.candidateDao.findAll());	
 	}
 
 	@Override
-	public Result add(JobSeeker jobSeeker) {
+	public Result add(Candidate candidate) {
 		
-		var result = this.jobSeekerDao.save(jobSeeker);
+		var result = this.candidateDao.save(candidate);
 		if(result != null) {
-			return new SuccessResult(Messages.userAddSuccess);
+			return new SuccessResult(Messages.userAddedSuccess);
 		}
 		return new ErrorResult();
 	}
 
 	@Override
-	public Result validate(JobSeeker jobSeeker) {
-		var errors = validationService.validate(jobSeeker);
+	public Result validate(Candidate candidate) {
+		var errors = validationService.validate(candidate);
 		
 		if(errors != null) {
 			String message = "";
@@ -61,9 +61,9 @@ public class JobSeekerManager implements JobSeekerService {
 
 	@Override
 	public Result checkLogin(String email, String password) {
-		JobSeeker jobSeeker = this.jobSeekerDao.findUserByEmailAndPassword(email, password);
-			if(jobSeeker != null) {
-				if(jobSeeker.isActive() && !jobSeeker.isDeleted()) {
+		Candidate candidate = this.candidateDao.findCandidateByEmailAndPassword(email, password);
+			if(candidate != null) {
+				if(candidate.isActive() && !candidate.isDeleted()) {
 					return new SuccessResult();
 				}
 			}
@@ -73,7 +73,7 @@ public class JobSeekerManager implements JobSeekerService {
 
 	@Override
 	public boolean checkIfExistsUserByNationalityId(String nationalityId) {
-		return jobSeekerDao.existsByNationalityId(nationalityId);
+		return candidateDao.existsByNationalityId(nationalityId);
 	}
 
 }

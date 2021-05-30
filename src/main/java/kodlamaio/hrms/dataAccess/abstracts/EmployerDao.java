@@ -6,6 +6,7 @@ import kodlamaio.hrms.entities.concretes.Employer;
 
 public interface EmployerDao extends JpaRepository<Employer, Integer> {
 
-	Employer findUserByEmailAndPassword(String email, String password);
+	Employer findEmployerByEmailAndPassword(String email, String password);
+	Employer getById(int employerId);
 
 }

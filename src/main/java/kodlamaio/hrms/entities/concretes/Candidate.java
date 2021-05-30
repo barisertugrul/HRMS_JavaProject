@@ -13,11 +13,11 @@ import lombok.NoArgsConstructor;
 @Data
 @EqualsAndHashCode(callSuper=false)
 @Entity
-@Table(name = "job_seekers")
+@Table(name = "candidates")
 @PrimaryKeyJoinColumn(name = "user_id")
 @AllArgsConstructor
 @NoArgsConstructor
-public class JobSeeker extends User{
+public class Candidate extends User{
 	
 	@Column(name= "first_name")
 	private String firstName;
@@ -31,7 +31,7 @@ public class JobSeeker extends User{
 	@Column(name= "year_of_birth")
 	private int yearOfBirth;
 	
-	public JobSeeker(
+	public Candidate(
 			String firstName,
 			String lastName,
 			String nationalityId,

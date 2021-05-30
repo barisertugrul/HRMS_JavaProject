@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class JobSeekerForRegisterDto implements ValidatableUser {
+public class CandidateForRegisterDto implements ValidatableUser {
     private String firstName;
     private String lastName;
     private String nationalityId;

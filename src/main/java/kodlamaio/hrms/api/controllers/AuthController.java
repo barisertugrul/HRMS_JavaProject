@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import kodlamaio.hrms.business.abstracts.AuthService;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.dtos.EmployerForRegisterDto;
-import kodlamaio.hrms.entities.dtos.JobSeekerForRegisterDto;
+import kodlamaio.hrms.entities.dtos.CandidateForRegisterDto;
 import kodlamaio.hrms.entities.dtos.UserForLoginDto;
 
 @RestController
@@ -28,9 +28,9 @@ public class AuthController {
         return authService.login(userForLoginDto);
     }
     
-    @PostMapping("/loginjobseeker")
-    public Result loginJobSeeker(@RequestBody UserForLoginDto userForLoginDto) {
-        return authService.loginJobSeeker(userForLoginDto);
+    @PostMapping("/loginCandidate")
+    public Result loginCandidate(@RequestBody UserForLoginDto userForLoginDto) {
+        return authService.loginCandidate(userForLoginDto);
     }
     
     @PostMapping("/loginemployer")
@@ -48,12 +48,12 @@ public class AuthController {
         return authService.employerRegister(employerForRegisterDto);
     }
 
-    @PostMapping("/jobSeekerregister")
-    public Result registerForJobSeeker(@RequestBody JobSeekerForRegisterDto jobSeekerForRegisterDto) {
-        return authService.jobSeekerRegister(jobSeekerForRegisterDto);
+    @PostMapping("/candidateRegister")
+    public Result registerForCandidate(@RequestBody CandidateForRegisterDto candidateForRegisterDto) {
+        return authService.candidateRegister(candidateForRegisterDto);
     }
 
-    @PostMapping("/confirmactivation")
+    @PostMapping("/confirmActivation")
     public Result confirmActivation(@RequestBody String email, String activationCode) {
         return authService.confirmActivation(email, activationCode);
     }

@@ -39,14 +39,14 @@ public class EmployerManager implements EmployerService {
 	public Result add(Employer employer) {
 		var result = this.employerDao.save(employer);
 		if(result != null) {
-			return new SuccessResult(Messages.userAddSuccess);
+			return new SuccessResult(Messages.userAddedSuccess);
 		}
 		return new ErrorResult();
 	}
 
 	@Override
 	public Result checkLogin(String email, String password) {
-		Employer employer = this.employerDao.findUserByEmailAndPassword(email, password);
+		Employer employer = this.employerDao.findEmployerByEmailAndPassword(email, password);
 		if(employer != null) {
 			if(employer.isActive() && employer.isAdminConfirm() && !employer.isDeleted()) {
 				return new SuccessResult();
@@ -67,5 +67,21 @@ public class EmployerManager implements EmployerService {
 			return new ErrorResult(message);
 		}
 		return new SuccessResult();
+	}
+
+	@Override
+	public Result verifyByAdmin(Employer employer) {
+		employer.setAdminConfirm(true);
+		var result = employerDao.save(employer);
+		if(result != null) {
+			return new SuccessResult(Messages.employerVerifiedByAdmin);
+		}
+		return new ErrorResult();
+	}
+
+	@Override
+	public boolean isActive(int employerId) {
+		Employer employer = this.employerDao.getById(employerId);
+		return employer.isActive() && employer.isAdminConfirm() && !employer.isDeleted();
 	}
 }
