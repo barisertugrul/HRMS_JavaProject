@@ -113,23 +113,11 @@ public class CvManager implements CvService {
 
 	@Override
 	public DataResult<Photo> uploadCvPhoto(int cvId, MultipartFile photoFile) {
-		DataResult<Map<String, String>> result = null;
 		try {
-			result = this.photoService.upload(photoFile);
-
-			Photo photo = new Photo();
-			photo.setCvId(cvId);
-			photo.setCreatedDate(LocalDate.now());
-			photo.setImage(result.getData().get("url"));
-			photo.setTitle(result.getData().get("public_id"));
-			Result addingResult = photoService.add(photo);
-			if (addingResult.isSuccess()) {
-				return new SuccessDataResult<Photo>(photo);
-			}
+			return this.photoService.upload(photoFile, cvId);
 		} catch (IOException e) {
 			return new ErrorDataResult<Photo>(null, e.getMessage());
 		}
-		return new ErrorDataResult<Photo>();
 	}
 
 }

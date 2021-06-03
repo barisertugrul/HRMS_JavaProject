@@ -1,6 +1,7 @@
 package kodlamaio.hrms.business.concretes;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorDataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
+import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.dataAccess.abstracts.PhotoDao;
 import kodlamaio.hrms.entities.concretes.Photo;
@@ -46,13 +48,22 @@ public class PhotoManager implements PhotoService {
 	}
 
 	@Override
-	public DataResult<Map<String, String>> upload(MultipartFile photo) throws IOException {
-		var result = this.photoUploadHelper.upload(photo);
+	public DataResult<Photo> upload(MultipartFile photoFile, int cvId) throws IOException {
+		var result = this.photoUploadHelper.upload(photoFile);
 
 		if(result.isSuccess()) {
-			return result;
+
+			Photo photo = new Photo();
+			photo.setCvId(cvId);
+			photo.setCreatedDate(LocalDate.now());
+			photo.setImage(result.getData().get("url"));
+			photo.setTitle(result.getData().get("public_id"));
+			Result addingResult = this.add(photo);
+			if (addingResult.isSuccess()) {
+				return new SuccessDataResult<Photo>(photo);
+			}
 		}
-		return new ErrorDataResult<Map<String,String>>(null,"Dosya yüklenemedi");
+		return new ErrorDataResult<Photo>(null,"Dosya yüklenemedi");
 	}
 
 }

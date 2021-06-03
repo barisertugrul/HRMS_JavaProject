@@ -13,5 +13,5 @@ import kodlamaio.hrms.entities.concretes.Photo;
 public interface PhotoService {
 	Result add(Photo photo);
 	DataResult<List<Photo>> getByCvId(int cvId);
-	DataResult<Map<String, String>> upload(MultipartFile photo) throws IOException;
+	DataResult<Photo> upload(MultipartFile photo, int cvId) throws IOException;
 }
