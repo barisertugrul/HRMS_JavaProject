@@ -1,5 +1,6 @@
 # HRMS_JavaProject
 Yazılım Geliştirici Yetiştirme Kampı (JAVA &amp; REACT) Uygulama Projesi (Backend)
+
 9.Gün Ödevleri:
 * cvs, skills, educations, experiences, languages ve photos tabloları eklendi.
 * Ana özgeçmiş tablosu olan cvs tablosu user_id aracılığı ile Candidate tablosuna, skills, educations, experiences, languages ve photos tabloları da cv_id ile cvs tablosuna bağlandı.
