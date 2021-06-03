@@ -39,7 +39,6 @@ public class CloudinaryAdapterService implements PhotoUploadHelper {
 	    		file.delete();
 	    		return new SuccessDataResult<Map<String, String>>(result);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return new ErrorDataResult<Map<String, String>>("Dosya yüklenemedi");
 			}
