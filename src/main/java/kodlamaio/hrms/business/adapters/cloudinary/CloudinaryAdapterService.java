@@ -44,9 +44,9 @@ public class CloudinaryAdapterService implements PhotoUploadHelper {
 			}
     	}
     	
-    	public Map delete (String id) throws IOException {
+    	public DataResult<Map> delete (String id) throws IOException {
     		Map result = cloudinary.uploader().destroy(id,ObjectUtils.emptyMap());
-    		return result;
+    		return new SuccessDataResult<Map>(result);
     	}
     	
     	
