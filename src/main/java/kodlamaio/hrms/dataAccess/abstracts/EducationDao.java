@@ -16,4 +16,6 @@ public interface EducationDao extends JpaRepository<Education, Integer> {
 			+ " From educations e left join cvs cv on e.cv_id = cv.cv_id"
 			+ " where cv.user_id=:candidateId Order By e.graduation_date DESC Nulls First", nativeQuery = true)
 	List<Education> getByCandidateIdWithOrdered(int candidateId);
+
+	Education getById(int educationId);
 }

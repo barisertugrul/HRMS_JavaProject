@@ -11,4 +11,5 @@ public interface EducationService {
 	Result add(Education education);
 	DataResult<List<Education>> getByCvIdWithOrdered(int cvId);
 	DataResult<List<Education>> getByCandidateIdWithOrdered(int candidateId);
+	DataResult<Education> getById(int educationId);
 }

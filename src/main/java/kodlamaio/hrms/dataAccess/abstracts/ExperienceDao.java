@@ -16,4 +16,6 @@ public interface ExperienceDao extends JpaRepository<Experience, Integer> {
 			+ " From experiences e left join cvs cv on e.cv_id = cv.cv_id"
 			+ " where cv.user_id=:candidateId Order By e.departure_date DESC Nulls First", nativeQuery = true)
 	List<Experience> getByCandidateIdWithOrdered(int candidateId);
+
+	Experience getById(int experienceId);
 }

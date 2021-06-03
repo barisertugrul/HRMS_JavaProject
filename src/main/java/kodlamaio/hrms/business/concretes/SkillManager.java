@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import kodlamaio.hrms.business.abstracts.SkillService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
+import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.dataAccess.abstracts.SkillDao;
 import kodlamaio.hrms.entities.concretes.Skill;
@@ -31,8 +32,17 @@ public class SkillManager implements SkillService {
 
 	@Override
 	public DataResult<List<Skill>> getByCvId(int cvId) {
-		// TODO Auto-generated method stub
-		return null;
+		return new SuccessDataResult<List<Skill>>(this.skillDao.getByCvId(cvId));
+	}
+
+	@Override
+	public DataResult<Skill> getById(int skillId) {
+		return new SuccessDataResult<Skill>(this.skillDao.getById(skillId));
+	}
+
+	@Override
+	public DataResult<List<Skill>> getByCandidateId(int candidateId) {
+		return new SuccessDataResult<List<Skill>>(this.skillDao.getByCandidateId(candidateId));
 	}
 
 }

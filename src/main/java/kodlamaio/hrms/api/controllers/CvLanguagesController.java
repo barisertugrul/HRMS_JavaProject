@@ -4,55 +4,47 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import kodlamaio.hrms.business.abstracts.ExperienceService;
+import kodlamaio.hrms.business.abstracts.CvLanguageService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorDataResult;
-import kodlamaio.hrms.entities.concretes.Experience;
+import kodlamaio.hrms.entities.concretes.CvLanguage;
 
 @RestController
-@RequestMapping("/api/experiences")
-public class ExperiencesController {
-	private ExperienceService experienceService;
-	
+@RequestMapping("/api/cvlanguages")
+public class CvLanguagesController {
+
+	private CvLanguageService languageService;
+
 	@Autowired
-	public ExperiencesController(ExperienceService experienceService) {
+	public CvLanguagesController(CvLanguageService languageService) {
 		super();
-		this.experienceService = experienceService;
+		this.languageService = languageService;
 	}
 
-	@PostMapping("/add")
-	public ResponseEntity<?> add(@Valid @RequestBody Experience experience) {
-		return ResponseEntity.ok(this.experienceService.add(experience));
-	}
-	
+
 	@PostMapping("/getById")
-	public DataResult<Experience> getById(int experienceId){
-		return experienceService.getById(experienceId);
+	public DataResult<CvLanguage> getById(int languageId){
+		return languageService.getById(languageId);
 	}
 
-	@GetMapping("/getOrderedByCvId")
-	DataResult<List<Experience>> getOrderedByCvId(int cvId){
-		return experienceService.getByCvIdWithOrdered(cvId);
+	@PostMapping("/getByCvId")
+	public DataResult<List<CvLanguage>> getByCvId(int cvId){
+		return languageService.getByCvId(cvId);
 	}
 
-	@GetMapping("/getOrderedByCandidateId")
-	DataResult<List<Experience>> getOrderedByCandidateId(int candidateId){
-		return experienceService.getByCandidateIdWithOrdered(candidateId);
+	@PostMapping("/getByCandidateId")
+	public DataResult<List<CvLanguage>> getByCandidateId(int candidateId){
+		return languageService.getByCandidateId(candidateId);
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)

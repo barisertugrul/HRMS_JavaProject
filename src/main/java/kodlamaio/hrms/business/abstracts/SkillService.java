@@ -10,4 +10,6 @@ public interface SkillService {
 
 	Result add(Skill skill);
 	DataResult<List<Skill>> getByCvId(int cvId);
+	DataResult<Skill> getById(int skillId);
+	DataResult<List<Skill>> getByCandidateId(int candidateId);
 }

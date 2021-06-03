@@ -11,7 +11,6 @@ import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.dataAccess.abstracts.ExperienceDao;
-import kodlamaio.hrms.entities.concretes.Education;
 import kodlamaio.hrms.entities.concretes.Experience;
 
 @Service
@@ -39,6 +38,11 @@ public class ExperienceManager implements ExperienceService {
 	@Override
 	public DataResult<List<Experience>> getByCandidateIdWithOrdered(int candidateId) {
 		return new SuccessDataResult<List<Experience>>(this.experienceDao.getByCandidateIdWithOrdered(candidateId));
+	}
+
+	@Override
+	public DataResult<Experience> getById(int experienceId) {
+		return new SuccessDataResult<Experience>(this.experienceDao.getById(experienceId));
 	}
 
 }

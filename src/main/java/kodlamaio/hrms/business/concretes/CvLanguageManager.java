@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import kodlamaio.hrms.business.abstracts.CvLanguageService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
+import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.dataAccess.abstracts.CvLanguageDao;
 import kodlamaio.hrms.entities.concretes.CvLanguage;
@@ -31,8 +32,17 @@ public class CvLanguageManager implements CvLanguageService {
 
 	@Override
 	public DataResult<List<CvLanguage>> getByCvId(int cvId) {
-		// TODO Auto-generated method stub
-		return null;
+		return new SuccessDataResult<List<CvLanguage>>(this.cvLanguageDao.getByCvId(cvId));
+	}
+
+	@Override
+	public DataResult<CvLanguage> getById(int languageId) {
+		return new SuccessDataResult<CvLanguage>(this.cvLanguageDao.getById(languageId));
+	}
+
+	@Override
+	public DataResult<List<CvLanguage>> getByCandidateId(int candidateId) {
+		return new SuccessDataResult<List<CvLanguage>>(this.cvLanguageDao.getByCandidateId(candidateId));
 	}
 
 }

@@ -40,4 +40,9 @@ public class EducationManager implements EducationService {
 		return new SuccessDataResult<List<Education>>(this.educationDao.getByCandidateIdWithOrdered(candidateId));
 	}
 
+	@Override
+	public DataResult<Education> getById(int educationId) {
+		return new SuccessDataResult<Education>(this.educationDao.getById(educationId));
+	}
+
 }

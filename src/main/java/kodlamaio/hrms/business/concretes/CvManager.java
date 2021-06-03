@@ -1,9 +1,6 @@
 package kodlamaio.hrms.business.concretes;
 
-import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +13,6 @@ import kodlamaio.hrms.business.abstracts.ExperienceService;
 import kodlamaio.hrms.business.abstracts.PhotoService;
 import kodlamaio.hrms.business.abstracts.SkillService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
-import kodlamaio.hrms.core.utilities.results.ErrorDataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
@@ -113,11 +109,7 @@ public class CvManager implements CvService {
 
 	@Override
 	public DataResult<Photo> uploadCvPhoto(int cvId, MultipartFile photoFile) {
-		try {
-			return this.photoService.upload(photoFile, cvId);
-		} catch (IOException e) {
-			return new ErrorDataResult<Photo>(null, e.getMessage());
-		}
+		return this.photoService.upload(photoFile, cvId);
 	}
 
 }

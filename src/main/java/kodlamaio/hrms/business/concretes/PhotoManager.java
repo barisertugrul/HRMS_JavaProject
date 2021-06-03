@@ -1,6 +1,5 @@
 package kodlamaio.hrms.business.concretes;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -43,13 +42,16 @@ public class PhotoManager implements PhotoService {
 
 	@Override
 	public DataResult<List<Photo>> getByCvId(int cvId) {
-		// TODO Auto-generated method stub
-		return null;
+		var result = this.photoDao.getByCvId(cvId);
+		if(result != null) {
+			return new SuccessDataResult<List<Photo>>(result);
+		}
+		return new ErrorDataResult<List<Photo>>();
 	}
 
 	@Override
-	public DataResult<Photo> upload(MultipartFile photoFile, int cvId) throws IOException {
-		var result = this.photoUploadHelper.upload(photoFile);
+	public DataResult<Photo> upload(MultipartFile photoFile, int cvId) {
+		DataResult<Map<String, String>> result = this.photoUploadHelper.upload(photoFile);
 
 		if(result.isSuccess()) {
 
@@ -64,6 +66,24 @@ public class PhotoManager implements PhotoService {
 			}
 		}
 		return new ErrorDataResult<Photo>(null,"Dosya yüklenemedi");
+	}
+
+	@Override
+	public DataResult<List<Photo>> getByCandidateId(int candidateId) {
+		var result =  this.photoDao.getByCandidateId(candidateId);
+		if(result != null) {
+			return new SuccessDataResult<List<Photo>>(result);
+		}
+		return new ErrorDataResult<List<Photo>>();
+	}
+
+	@Override
+	public DataResult<Photo> getById(int photoId) {
+		var result =  this.photoDao.getById(photoId);
+		if(result != null) {
+			return new SuccessDataResult<Photo>(result);
+		}
+		return new ErrorDataResult<Photo>();
 	}
 
 }

@@ -9,5 +9,7 @@ import kodlamaio.hrms.entities.concretes.CvLanguage;
 public interface CvLanguageService {
 	Result add(CvLanguage cvLanguage);
 	DataResult<List<CvLanguage>> getByCvId(int cvId);
+	DataResult<CvLanguage> getById(int languageId);
+	DataResult<List<CvLanguage>> getByCandidateId(int candidateId);
 
 }
