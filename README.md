@@ -20,6 +20,8 @@ Geçmiş:
 * Özellikle daha önceden kayıtlı kullanıcıları, belli şartlara bağlı olarak hızlıca ve az kodla tespit edebilmek için Engin hocanın paylaştığı https://www.baeldung.com/spring-data-derived-queries adresindeki yazıdan yararlanarak sorgular hazırladım. Login kontrolü için de aynı anda mail ve password eşleşmesini kontrol eden genişletilmiş sorgu kullandım.
 * Activasyon için AuthController içerisinde email ve activation code bilgilerini alan comfirmActivation metodu tanımlayıp, AuthManager içerisindeki ilgili metoda yönlendirme yaptım.
 
+NOT: Cloudinary Service adaptasyonunu kullanmak isteyen arkadaşların, adapters paketindeki CloudinaryAdapterService içerisindeki api bilgilerini kendi üyelik bilgilerine göre doldurmaları yeterli olacaktır.
+
 ## ERDiagram
 ![alt ERDiagram](https://github.com/barisertugrul/HRMS_JavaProject/blob/master/resources/hrms_ERDiagram.png?raw=true)
 
