@@ -1,6 +1,15 @@
 # HRMS_JavaProject
 Yazılım Geliştirici Yetiştirme Kampı (JAVA &amp; REACT) Uygulama Projesi (Backend)
+9.Gün Ödevleri:
+* cvs, skills, educations, experiences, languages ve photos tabloları eklendi.
+* Ana özgeçmiş tablosu olan cvs tablosu user_id aracılığı ile Candidate tablosuna, skills, educations, experiences, languages ve photos tabloları da cv_id ile cvs tablosuna bağlandı.
+* Bütün cv alanlarını içerecek ve tek adımda kayıt yapılacak şekilde (Education list, Experience list, Skill List, Language list) Cv formu hazırlandı
+* Cv id'sine göre cloudinary platformuna fotoğraf yükleme metodu yazıldı (Cv formuyla birlikte yüklenebilmesi için code refactoring yapılacak)
+* Alınacak Okul ve iş deneyimi listelerinin cv ve kullanıcıya göre sogulanacak, sorgu sonuçları tersten sıralanacak, mezuniyet veya işten ayrılma tarihlerinde null değerlere sahip kayıtlar en üstte olacak şekilde çıktı vermesi için gerekli metotlar yazıldı. (Listelerdeki Null değerlere "Devam ediyor" çıktısı yazdırılması, alanın Date tipinden çıkmasına yol açtığı için frontend tarafına bırakıldı)
+* Cloudinary servisi, core katmanına yerleştirilen bir upload helper interface'i implement edilerek, business katmanında adapters paketine yerleştirildi. Ve constructor injection ile PhotoManager içerisinde kullanıldı.
+* CvManager içerisindeki constructor injection parametrelerinin fazlalığı rahatsız ettiği için üzerinde çalışılacak.
 
+Geçmiş:
 * İş arayanlar ve iş verenler için gerekli register işlemleri AuthManager içerisinde ayrı metotlarla gerçekleştiriliyor
 * Gerekli alanların doluluk ve uygunluk kontrolleri, Business katmanına yerleştirdiğim kendi Validation sınıfları ile yapılıyor. Tüm alan hataları toplu olarak kullanıcıya geri iletiliyor.
 * Email ve TC kimlik no uygunluk kontrolünü basit regex kalıpları ile yaptım, ama eksik olduğu için istisnalara yol açabiliyor.
