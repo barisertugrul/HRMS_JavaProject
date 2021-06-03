@@ -19,7 +19,7 @@ import kodlamaio.hrms.business.constants.Messages;
 @Service
 public class UserManager implements UserService {
 
-private UserDao userDao;
+	private UserDao userDao;
 	
 	@Autowired
 	public UserManager(UserDao userDao) {

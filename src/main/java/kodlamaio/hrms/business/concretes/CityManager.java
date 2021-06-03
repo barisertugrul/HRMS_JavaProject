@@ -18,7 +18,7 @@ import kodlamaio.hrms.entities.concretes.City;
 @Service
 public class CityManager implements CityService {
 
-	CityDao cityDao;
+	private CityDao cityDao;
 	
 	@Autowired
 	public CityManager(CityDao cityDao) {

@@ -22,8 +22,8 @@ import kodlamaio.hrms.entities.dtos.JobAdvertisementDto;
 @Service
 public class JobAdvertisementManager implements JobAdvertisementService {
 
-	JobAdvertisementDao jobAdvertisementDao;
-	EmployerService employerService;
+	private JobAdvertisementDao jobAdvertisementDao;
+	private EmployerService employerService;
 	
 	@Autowired
 	public JobAdvertisementManager(JobAdvertisementDao jobAdvertisementDao, EmployerService employerService) {
