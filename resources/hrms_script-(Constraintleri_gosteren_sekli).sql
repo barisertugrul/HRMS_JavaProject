@@ -11,6 +11,8 @@ CREATE DATABASE "Hrms"
     TABLESPACE = pg_default
     CONNECTION LIMIT = -1;
 	
+	
+	
 -- Table: public.employees
 
 -- DROP TABLE public.employees;
@@ -68,8 +70,7 @@ CREATE TABLE public.job_positions
     position_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
     position_name character varying(30) COLLATE pg_catalog."default" NOT NULL,
     position_description text COLLATE pg_catalog."default",
-    CONSTRAINT job_positions_pkey PRIMARY KEY (position_id),
-    CONSTRAINT job_positions_position_name_key UNIQUE (position_name)
+    CONSTRAINT job_positions_pkey PRIMARY KEY (position_id)
 )
 
 TABLESPACE pg_default;
@@ -78,17 +79,17 @@ ALTER TABLE public.job_positions
     OWNER to postgres;
 
 
--- Table: public.job_seeker
+-- Table: public.candidates
 
--- DROP TABLE public.job_seeker;
+-- DROP TABLE public.candidates;
 
-CREATE TABLE public.job_seeker
+CREATE TABLE public.candidates
 (
     user_id smallint NOT NULL,
     first_name character varying(30) COLLATE pg_catalog."default" NOT NULL,
     last_name character varying(30) COLLATE pg_catalog."default" NOT NULL,
     nationality_id character varying(15) COLLATE pg_catalog."default" NOT NULL,
-    birth_date date NOT NULL,
+    year_of_birth smallint NOT NULL,
     CONSTRAINT job_seeker_pkey PRIMARY KEY (user_id),
     CONSTRAINT job_seeker_nationality_id_key UNIQUE (nationality_id),
     CONSTRAINT job_seeker_user_id_fkey FOREIGN KEY (user_id)
@@ -100,7 +101,7 @@ CREATE TABLE public.job_seeker
 
 TABLESPACE pg_default;
 
-ALTER TABLE public.job_seeker
+ALTER TABLE public.candidates
     OWNER to postgres;
 
 
@@ -116,7 +117,7 @@ CREATE TABLE public.users
     register_date timestamp with time zone NOT NULL,
     activation_code character varying(500) COLLATE pg_catalog."default" NOT NULL DEFAULT true,
     email_comfirm boolean NOT NULL DEFAULT false,
-    is_active boolean NOT NULL DEFAULT true,
+    is_active boolean NOT NULL DEFAULT false,
     is_deleted boolean NOT NULL DEFAULT false,
     CONSTRAINT users_pkey PRIMARY KEY (id)
 )
@@ -125,6 +126,7 @@ TABLESPACE pg_default;
 
 ALTER TABLE public.users
     OWNER to postgres;
+
 
 -- Table: public.job_advertisements
 
@@ -164,6 +166,7 @@ TABLESPACE pg_default;
 ALTER TABLE public.job_advertisements
     OWNER to postgres;
 
+
 -- Table: public.cities
 
 -- DROP TABLE public.cities;
@@ -182,4 +185,154 @@ CREATE TABLE public.cities
 TABLESPACE pg_default;
 
 ALTER TABLE public.cities
+    OWNER to postgres;
+	
+
+
+-- Table: public.cvs
+
+-- DROP TABLE public.cvs;
+
+CREATE TABLE public.cvs
+(
+    cv_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
+    user_id smallint NOT NULL,
+    github_link character varying(255) COLLATE pg_catalog."default",
+    linkedin_link character varying(255) COLLATE pg_catalog."default",
+    summary text COLLATE pg_catalog."default",
+    CONSTRAINT cvs_pkey PRIMARY KEY (cv_id),
+    CONSTRAINT cvs_user_id_fkey FOREIGN KEY (user_id)
+        REFERENCES public.candidates (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.cvs
+    OWNER to postgres;
+
+
+-- Table: public.cv_languages
+
+-- DROP TABLE public.cv_languages;
+
+CREATE TABLE public.cv_languages
+(
+    language_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
+    cv_id smallint NOT NULL,
+    language_name character varying(30) COLLATE pg_catalog."default" NOT NULL,
+    language_level smallint NOT NULL,
+    CONSTRAINT cv_languages_pkey PRIMARY KEY (language_id),
+    CONSTRAINT cv_languages_cv_id_fkey FOREIGN KEY (cv_id)
+        REFERENCES public.cvs (cv_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.cv_languages
+    OWNER to postgres;
+
+
+
+-- Table: public.educations
+
+-- DROP TABLE public.educations;
+
+CREATE TABLE public.educations
+(
+    education_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
+    cv_id smallint NOT NULL,
+    school_name character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    program_name character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    start_date date NOT NULL,
+    graduation_date date,
+    CONSTRAINT schools_pkey PRIMARY KEY (education_id),
+    CONSTRAINT schools_cv_id_fkey FOREIGN KEY (cv_id)
+        REFERENCES public.cvs (cv_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.educations
+    OWNER to postgres;
+
+
+
+-- Table: public.experiences
+
+-- DROP TABLE public.experiences;
+
+CREATE TABLE public.experiences
+(
+    experience_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
+    cv_id smallint NOT NULL,
+    workplace_name character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    job_title character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    start_date date NOT NULL,
+    departure_date date,
+    CONSTRAINT experiences_pkey PRIMARY KEY (experience_id),
+    CONSTRAINT experiences_cv_id_fkey FOREIGN KEY (cv_id)
+        REFERENCES public.cvs (cv_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.experiences
+    OWNER to postgres;
+	
+	
+
+-- Table: public.photos
+
+-- DROP TABLE public.photos;
+
+CREATE TABLE public.photos
+(
+    photo_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
+    cv_id smallint NOT NULL,
+    title character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    image character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    created_date date NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT photos_pkey PRIMARY KEY (photo_id),
+    CONSTRAINT photos_cv_id_fkey FOREIGN KEY (cv_id)
+        REFERENCES public.cvs (cv_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.photos
+    OWNER to postgres;
+
+
+
+-- Table: public.skills
+
+-- DROP TABLE public.skills;
+
+CREATE TABLE public.skills
+(
+    skill_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
+    cv_id smallint NOT NULL,
+    skill character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    skill_level smallint,
+    CONSTRAINT skills_pkey PRIMARY KEY (skill_id),
+    CONSTRAINT skills_cv_id_fkey FOREIGN KEY (cv_id)
+        REFERENCES public.cvs (cv_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.skills
     OWNER to postgres;

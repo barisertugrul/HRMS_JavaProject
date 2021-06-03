@@ -20,6 +20,36 @@ CREATE TABLE public.cities
     PRIMARY KEY (city_id)
 );
 
+CREATE TABLE public.cv_languages
+(
+    language_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
+    cv_id smallint NOT NULL,
+    language_name character varying(30) NOT NULL,
+    language_level smallint NOT NULL,
+    PRIMARY KEY (language_id)
+);
+
+CREATE TABLE public.cvs
+(
+    cv_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
+    user_id smallint NOT NULL,
+    github_link character varying(255),
+    linkedin_link character varying(255),
+    summary text,
+    PRIMARY KEY (cv_id)
+);
+
+CREATE TABLE public.educations
+(
+    education_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
+    cv_id smallint NOT NULL,
+    school_name character varying(100) NOT NULL,
+    program_name character varying(100) NOT NULL,
+    start_date date NOT NULL,
+    graduation_date date,
+    PRIMARY KEY (education_id)
+);
+
 CREATE TABLE public.employees
 (
     user_id smallint NOT NULL,
@@ -36,6 +66,17 @@ CREATE TABLE public.employers
     admin_confirm boolean NOT NULL,
     website character varying(50) NOT NULL,
     PRIMARY KEY (user_id)
+);
+
+CREATE TABLE public.experiences
+(
+    experience_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
+    cv_id smallint NOT NULL,
+    workplace_name character varying(100) NOT NULL,
+    job_title character varying(50) NOT NULL,
+    start_date date NOT NULL,
+    departure_date date,
+    PRIMARY KEY (experience_id)
 );
 
 CREATE TABLE public.job_advertisements
@@ -63,6 +104,25 @@ CREATE TABLE public.job_positions
     PRIMARY KEY (position_id)
 );
 
+CREATE TABLE public.photos
+(
+    photo_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
+    cv_id smallint NOT NULL,
+    title character varying(50) NOT NULL,
+    image character varying(255) NOT NULL,
+    created_date date NOT NULL,
+    PRIMARY KEY (photo_id)
+);
+
+CREATE TABLE public.skills
+(
+    skill_id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
+    cv_id smallint NOT NULL,
+    skill character varying(50) NOT NULL,
+    skill_level smallint,
+    PRIMARY KEY (skill_id)
+);
+
 CREATE TABLE public.users
 (
     id smallint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 32767 CACHE 1 ),
@@ -88,6 +148,24 @@ ALTER TABLE public.cities
     NOT VALID;
 
 
+ALTER TABLE public.cv_languages
+    ADD FOREIGN KEY (cv_id)
+    REFERENCES public.cvs (cv_id)
+    NOT VALID;
+
+
+ALTER TABLE public.cvs
+    ADD FOREIGN KEY (user_id)
+    REFERENCES public.candidates (user_id)
+    NOT VALID;
+
+
+ALTER TABLE public.educations
+    ADD FOREIGN KEY (cv_id)
+    REFERENCES public.cvs (cv_id)
+    NOT VALID;
+
+
 ALTER TABLE public.employees
     ADD FOREIGN KEY (user_id)
     REFERENCES public.users (id)
@@ -97,6 +175,12 @@ ALTER TABLE public.employees
 ALTER TABLE public.employers
     ADD FOREIGN KEY (user_id)
     REFERENCES public.users (id)
+    NOT VALID;
+
+
+ALTER TABLE public.experiences
+    ADD FOREIGN KEY (cv_id)
+    REFERENCES public.cvs (cv_id)
     NOT VALID;
 
 
@@ -115,6 +199,18 @@ ALTER TABLE public.job_advertisements
 ALTER TABLE public.job_advertisements
     ADD FOREIGN KEY (position_id)
     REFERENCES public.job_positions (position_id)
+    NOT VALID;
+
+
+ALTER TABLE public.photos
+    ADD FOREIGN KEY (cv_id)
+    REFERENCES public.cvs (cv_id)
+    NOT VALID;
+
+
+ALTER TABLE public.skills
+    ADD FOREIGN KEY (cv_id)
+    REFERENCES public.cvs (cv_id)
     NOT VALID;
 
 END;
