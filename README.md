@@ -2,13 +2,18 @@
 Yazılım Geliştirici Yetiştirme Kampı (JAVA &amp; REACT) Uygulama Projesi (Backend)
 
 9.Gün Ödevleri:
-* cvs, skills, educations, experiences, languages ve photos tabloları eklendi.
+
+* Farklı alanlara başvuru için, aday başına birden fazla cv modeli temel alındı.
+* Birden çok okul, iş tecrübesi, yetenek/kullanılan teknoloji, yabancı dil ve fotoğraf eklenebilirliği gözetildi (ki fotoğraf dışındakiler için bu durum ödevde istenmiş), bu nedenle bu alanlar için ayrı tablolar oluşturuldu (cvs, skills, educations, experiences, languages ve photos). (Bu özellikler için birden fazla kayıt olabileceğinden dolayı, tek tabloda tutulması doğru olmazdı) 
 * Ana özgeçmiş tablosu olan cvs tablosu user_id aracılığı ile Candidate tablosuna, skills, educations, experiences, languages ve photos tabloları da cv_id ile cvs tablosuna bağlandı.
-* Bütün cv alanlarını içerecek ve tek adımda kayıt yapılacak şekilde (Education list, Experience list, Skill List, Language list) Cv formu hazırlandı
+* Bütün cv alanlarını içerecek ve tek adımda kayıt yapılacak şekilde (Education list, Experience list, Skill List, Language list) Cv formu hazırlandı. Alt alanlar istenirse ayrı ayrı da eklenebilir.
+* Silme ve güncelleştirme metotları daha sonra eklenecektir.
 * Cv id'sine göre cloudinary platformuna fotoğraf yükleme metodu yazıldı (Cv formuyla birlikte yüklenebilmesi için code refactoring yapılacak)
-* Alınacak Okul ve iş deneyimi listelerinin cv ve kullanıcıya göre sogulanacak, sorgu sonuçları tersten sıralanacak, mezuniyet veya işten ayrılma tarihlerinde null değerlere sahip kayıtlar en üstte olacak şekilde çıktı vermesi için gerekli metotlar yazıldı. (Listelerdeki Null değerlere "Devam ediyor" çıktısı yazdırılması, alanın Date tipinden çıkmasına yol açtığı için frontend tarafına bırakıldı)
+* Alınacak Okul ve iş deneyimi listelerinin cv ve kullanıcıya göre sorgulanacak, sorgu sonuçları tersten sıralanacak, mezuniyet veya işten ayrılma tarihlerinde null değerlere sahip kayıtlar en üstte olacak şekilde çıktı vermesi için gerekli metotlar yazıldı. (Listelerdeki Null değerlere "Devam ediyor" çıktısı yazdırılması, alanın Date tipinden çıkmasına yol açtığı için frontend tarafına bırakıldı)
 * Cloudinary servisi, core katmanına yerleştirilen bir upload helper interface'i implement edilerek, business katmanında adapters paketine yerleştirildi. Ve constructor injection ile PhotoManager içerisinde kullanıldı.
 * CvManager içerisindeki constructor injection parametrelerinin fazlalığı rahatsız ettiği için üzerinde çalışılacak.
+
+NOT: Cloudinary Service adaptasyonunu kullanmak isteyen arkadaşların, adapters paketindeki CloudinaryAdapterService içerisindeki api bilgilerini kendi üyelik bilgilerine göre doldurmaları yeterli olacaktır.
 
 Geçmiş:
 * İş arayanlar ve iş verenler için gerekli register işlemleri AuthManager içerisinde ayrı metotlarla gerçekleştiriliyor
@@ -21,7 +26,6 @@ Geçmiş:
 * Özellikle daha önceden kayıtlı kullanıcıları, belli şartlara bağlı olarak hızlıca ve az kodla tespit edebilmek için Engin hocanın paylaştığı https://www.baeldung.com/spring-data-derived-queries adresindeki yazıdan yararlanarak sorgular hazırladım. Login kontrolü için de aynı anda mail ve password eşleşmesini kontrol eden genişletilmiş sorgu kullandım.
 * Activasyon için AuthController içerisinde email ve activation code bilgilerini alan comfirmActivation metodu tanımlayıp, AuthManager içerisindeki ilgili metoda yönlendirme yaptım.
 
-NOT: Cloudinary Service adaptasyonunu kullanmak isteyen arkadaşların, adapters paketindeki CloudinaryAdapterService içerisindeki api bilgilerini kendi üyelik bilgilerine göre doldurmaları yeterli olacaktır.
 
 ## ERDiagram
 ![alt ERDiagram](https://github.com/barisertugrul/HRMS_JavaProject/blob/master/resources/hrms_ERDiagram.png?raw=true)
