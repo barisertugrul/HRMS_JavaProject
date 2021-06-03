@@ -54,6 +54,11 @@ public class CvsController {
 		return ResponseEntity.ok(this.cvService.uploadCvPhoto(cvId, photo));
 	}
 
+	@PostMapping("/getByCandidateId")
+	public DataResult<List<Cv>> getByCandidateId(int candidateId){
+		return cvService.getByCandidateId(candidateId);
+	}
+
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ErrorDataResult<Object> handleValidationException(MethodArgumentNotValidException exceptions) {

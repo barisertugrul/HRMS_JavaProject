@@ -108,7 +108,7 @@ public class CvManager implements CvService {
 
 	@Override
 	public DataResult<List<Cv>> getByCandidateId(int candidateId) {
-		return null;
+		return new SuccessDataResult<List<Cv>>(cvDao.getByUserId(candidateId));
 	}
 
 	@Override
